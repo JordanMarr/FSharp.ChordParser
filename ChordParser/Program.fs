@@ -11,13 +11,13 @@ let processText semitones preferredAccidental text =
     |> List.fold (fun (sb: StringBuilder) txt -> sb.Append txt) (StringBuilder())
     |> string
 
-/// Creates a new UCASE file and saves the output.
+/// Creates a new ChordParser file and saves the output.
 let saveOutput filepath output =
     let file = FileInfo(filepath)
     let newPath = 
         Path.Combine(
             file.DirectoryName, 
-            Path.GetFileNameWithoutExtension(filepath) + " UCASE" + file.Extension
+            Path.GetFileNameWithoutExtension(filepath) + " ChordParser" + file.Extension
         )
 
     File.WriteAllText(newPath, output)
@@ -27,9 +27,9 @@ let main argv =
 
     match argv with
     | [||] ->
-        printfn "To run, type:\nucase \"hello world.txt\"\nor:\nucase \"c:\myfolder\myfile.txt\""
-        printfn "To transpose down 1 semitone preferring flats, type: \"\nucase \"myfile.txt\" -1 b"
-        printfn "To transpose up 2 semitones preferring sharps, type: \"\nucase \"myfile.txt\" 2 #"
+        printfn "To run, type:\nChordParser \"hello world.txt\"\nor:\nChordParser \"c:\myfolder\myfile.txt\""
+        printfn "To transpose down 1 semitone preferring flats, type: \"\nChordParser \"myfile.txt\" -1 b"
+        printfn "To transpose up 2 semitones preferring sharps, type: \"\nChordParser \"myfile.txt\" 2 #"
 
     | [| filepath |] ->
 
@@ -46,6 +46,6 @@ let main argv =
         |> saveOutput filepath
 
     | _ -> 
-        failwith "Expected ucase {filepath} OR ucase {filepath} {semitones +/-} {preferredAccidental}"
+        failwith "Expected ChordParser {filepath} OR ChordParser {filepath} {semitones +/-} {preferredAccidental}"
 
     0
