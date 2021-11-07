@@ -9,7 +9,7 @@ deploy
 packages
 paket-files
 *.dll
-*UCASE.txt
+*ChordParser.txt
 
 # JetBrains Raider - - - - - -
 
