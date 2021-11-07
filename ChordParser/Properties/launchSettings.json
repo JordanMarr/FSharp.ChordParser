@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ChordParser": {
+      "commandName": "Project",
+      "commandLineArgs": "\"..\\..\\..\\..\\Song.txt\" 2 b"
+    }
+  }
+}
