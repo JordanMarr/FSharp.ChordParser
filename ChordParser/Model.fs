@@ -17,7 +17,11 @@ let transpose semitones preferredAccidental chord =
     else
         let sharps = rootNotes |> List.filter (fun n -> not (n.EndsWith "b"))
         let flats = rootNotes |> List.filter (fun n -> not (n.EndsWith "#"))
-        let notes  = if preferredAccidental = "#" then sharps else flats
+        let notes  = 
+            match preferredAccidental with 
+            | "#" -> sharps 
+            | "b" -> flats
+            | _ -> failwith "Preferred Accidental must be either # or b."
 
         let transposeNote note =
             let sharpIdx = sharps |> List.tryFindIndex(fun n -> n = note)

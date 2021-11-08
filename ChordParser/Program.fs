@@ -27,9 +27,9 @@ let main argv =
 
     match argv with
     | [||] ->
-        printfn "To run, type:\nChordParser \"hello world.txt\"\nor:\nChordParser \"c:\myfolder\myfile.txt\""
-        printfn "To transpose down 1 semitone preferring flats, type: \"\nChordParser \"myfile.txt\" -1 b"
-        printfn "To transpose up 2 semitones preferring sharps, type: \"\nChordParser \"myfile.txt\" 2 #"
+        printfn "To run, type:\nChordParser \"my song.txt\"\nor:\nChordParser \"c:\myfolder\song.txt\""
+        printfn "To transpose down 1 semitone preferring flats, type: \"\nChordParser \"song.txt\" -1 b"
+        printfn "To transpose up 2 semitones preferring sharps, type: \"\nChordParser \"song.txt\" 2 #"
 
     | [| filepath |] ->
 
