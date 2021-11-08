@@ -37,4 +37,4 @@ let printChord chord =
     let tonality = chord.Tonality |> Option.defaultValue ""
     let extension = chord.Extension |> Option.defaultValue ""
     let bassNote = chord.BassNote |> Option.map (sprintf " /%s") |> Option.defaultValue ""
-    $"{chord.Root}{tonality}{extension}{bassNote}"
+    $"({chord.Root}{tonality}{extension}{bassNote})"
