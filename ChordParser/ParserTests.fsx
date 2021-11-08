@@ -6,6 +6,11 @@ open FParsec
 open Model
 open Parser
 
+let test parser text =
+    match (run parser text) with
+    | Success(result,_,_) -> printfn "Success: %A" result
+    | Failure(_,error,_) -> printfn "Error: %A" error
+
 test chord "(Bmaj7)"
 test chord "(A)"
 test chord "(G)"
@@ -33,7 +38,6 @@ let lyric = many1Chars (noneOf "(") .>> spaces |>> (string >> Lyrics)
 //let chordSheet = many (manyTill lyric chord) |>> string //<|> lyric)
 let chordSheet = many (lyric <|> chord)
 test chordSheet "The (BMaj7) quick brown fox (AMin7) jumped over the lazy (DMin7) dog."
-
 
 // Print tests
 let chord = { Root = "C"; Tonality = Some "min"; Extension = None; BassNote = Some "F" }
