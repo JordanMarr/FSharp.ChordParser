@@ -1,6 +1,4 @@
-﻿#I @"C:\Users\jmarr\.nuget\packages\fparsec\1.1.1\lib\netstandard2.0"
-#r "FParsec.dll"
-#r "FParsecCS.dll"
+﻿#r "nuget: FParsec"
 #load "Model.fs"
 #load "Parser.fs"
 

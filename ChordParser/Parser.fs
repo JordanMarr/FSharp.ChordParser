@@ -61,7 +61,5 @@ let chordChart = many (lyric <|> chord)
 /// Parses the chord chart.
 let parse text = 
     match run chordChart text with
-    | Success (ast,_,_) ->
-        ast
-    | Failure (_,error,_) ->
-        failwith (error.ToString())
+    | Success (ast,_,_) -> ast
+    | Failure (_,error,_) -> failwith (error.ToString())

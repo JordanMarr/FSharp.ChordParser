@@ -2,12 +2,13 @@
 
 let rootNotes = ["A"; "A#"; "Bb"; "B"; "C"; "C#"; "Db"; "D"; "D#"; "Eb"; "E"; "F"; "F#"; "Gb"; "G"; "G#"; "Ab"]
 
-type Chord = {
-    Root: string
-    Tonality: string option
-    Extension: string option
-    BassNote: string option
-}
+type Chord = 
+    {
+        Root: string
+        Tonality: string option
+        Extension: string option
+        BassNote: string option
+    }
 
 /// Transposes the root note of a chord and optional bass note to the given number of semitones, using the preferred accidental (# or b).
 let transpose semitones preferredAccidental chord =
@@ -35,5 +36,5 @@ let transpose semitones preferredAccidental chord =
 let printChord chord =
     let tonality = chord.Tonality |> Option.defaultValue ""
     let extension = chord.Extension |> Option.defaultValue ""
-    let bassNote = chord.BassNote |> Option.map (fun b -> sprintf " /%s" b) |> Option.defaultValue ""
+    let bassNote = chord.BassNote |> Option.map (sprintf " /%s") |> Option.defaultValue ""
     $"{chord.Root}{tonality}{extension}{bassNote}"

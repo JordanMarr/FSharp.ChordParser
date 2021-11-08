@@ -2,7 +2,7 @@
   "profiles": {
     "ChordParser": {
       "commandName": "Project",
-      "commandLineArgs": "\"..\\..\\..\\..\\Song.txt\" 2 b"
+      "commandLineArgs": "\"$(MSBuildProjectDirectory)/Song.txt\" 2 b"
     }
   }
 }
