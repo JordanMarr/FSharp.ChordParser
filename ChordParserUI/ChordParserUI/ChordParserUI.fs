@@ -26,8 +26,12 @@ module App =
     let initModel = 
         { 
             InputChordChart = 
+#if DEBUG
                 "(Bmaj7) Ooo Gustens,    you just (A#) so  (G)\n" +
                 "Dang   (Dmin7 /G) Baaad."
+#else
+                ""
+#endif
             OutputChordChart = ""
             Transpose = 1
             Accidental = "b"
