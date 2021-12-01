@@ -12,10 +12,14 @@ module App =
         { 
             InputChordChart: string
             OutputChordChart: string 
+            Transpose: int
+            Accidental: string
         }
 
     type Msg = 
         | SetInput of string
+        | SetTranspose of int
+        | SetAccidental of string
         | ParseChart
         | Reset
 
@@ -24,7 +28,9 @@ module App =
             InputChordChart = 
                 "(Bmaj7) Ooo Gustens,    you just (A#) so  (G)\n" +
                 "Dang   (Dmin7 /G) Baaad."
-            OutputChordChart = ""                
+            OutputChordChart = ""
+            Transpose = 2
+            Accidental = "b"
         }
 
     let init () = initModel, Cmd.none
@@ -32,22 +38,25 @@ module App =
     let update msg model =
         match msg with
         | SetInput txt -> { model with InputChordChart = txt }, Cmd.none
+        | SetTranspose xpose -> { model with Transpose = xpose }, Cmd.none
+        | SetAccidental acc -> { model with Accidental = acc }, Cmd.none
         | Reset -> init ()
         | ParseChart ->
             { model with 
-                OutputChordChart = model.InputChordChart |> App.processText 2 "b"
+                OutputChordChart = App.processText model.Transpose model.Accidental model.InputChordChart
             }, Cmd.none
         
     let view (model: Model) dispatch =
-        View.ContentPage(content = 
+        View.ContentPage(title = "Chord Parser", content = 
             View.Grid(
                 rowdefs = [ Dimension.Absolute 20.; Dimension.Star; Dimension.Absolute 30. ],
+                coldefs = [ Dimension.Star; Dimension.Absolute 50.; Dimension.Star ],
                 padding = Thickness 20.0, //verticalOptions = LayoutOptions.Center,
                 children = [ 
 
                     // Row
                     View.Label(text = "Input Chord Chart", horizontalOptions = LayoutOptions.Center, horizontalTextAlignment=TextAlignment.Start).Column(0)
-                    View.Label(text = "Output Chord Chart", horizontalOptions = LayoutOptions.Center, horizontalTextAlignment=TextAlignment.Start).Column(1)
+                    View.Label(text = "Output Chord Chart", horizontalOptions = LayoutOptions.Center, horizontalTextAlignment=TextAlignment.Start).Column(2)
 
                     // Row
                     View.Entry(
@@ -55,10 +64,18 @@ module App =
                         textChanged = (fun e -> dispatch (SetInput e.NewTextValue)),
                         verticalTextAlignment = TextAlignment.Start
                     ).Column(0).Row(1)
+
+                    View.StackLayout(
+                        children = [
+                            View.Entry(text = model.Transpose.ToString(), textChanged = (fun e -> dispatch (SetTranspose (int e.NewTextValue))))
+                            View.Entry(text = model.Accidental, textChanged = (fun e -> dispatch (SetAccidental e.NewTextValue)))
+                        ]
+                    ).Column(1).Row(1)
+
                     View.Entry(
                         text = model.OutputChordChart,
                         verticalTextAlignment = TextAlignment.Start
-                    ).Column(1).Row(1)
+                    ).Column(2).Row(1)
 
                     // Row
                     View.StackLayout(
@@ -72,7 +89,7 @@ module App =
                                 text = "Parse", width = 100., horizontalOptions = LayoutOptions.Center, command = (fun () -> dispatch ParseChart), commandCanExecute = (model.InputChordChart <> "")
                             )
                         ]
-                    ).Row(2).Column(1)
+                    ).Row(2).Column(2)
                 ])
             )
 
