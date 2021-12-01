@@ -3,6 +3,7 @@
 I created this for my dad to allow him to transpose chords and change lyrics to uppercase (and it was also a great opportunity for me to learn FParsec).
 
 ## Fabulous UI
+The simple UI was created using [Fabulous](https://fsprojects.github.io/Fabulous/) which uses Xamarin.Forms. It currently targets WPF for Windows, but Fabulous also supports iOS and Android.
 ![image](https://user-images.githubusercontent.com/1030435/144327830-f80de4b3-7f42-428d-8dd8-3ef9a221d2b6.png)
 
 ## Command line syntax:
