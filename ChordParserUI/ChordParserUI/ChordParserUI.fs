@@ -74,7 +74,8 @@ module App =
 
                     View.Entry(
                         text = model.OutputChordChart,
-                        verticalTextAlignment = TextAlignment.Start
+                        verticalTextAlignment = TextAlignment.Start,
+                        isReadOnly = true
                     ).Column(2).Row(1)
 
                     // Row
