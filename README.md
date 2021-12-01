@@ -7,6 +7,11 @@ It is currently a command line utility, but please feel free to contribute a GUI
 - ChordParser `{path to .txt file}`
 - ChordParser `{path to .txt file} {transpose semitones (int)} {preferred accidental (#|b)}`
 
+## Fabulous UI
+
+![image](https://user-images.githubusercontent.com/1030435/144327830-f80de4b3-7f42-428d-8dd8-3ef9a221d2b6.png)
+
+## Debug Output
 To try it out against the sample txt file (Song.txt), just run the app; it will output "Song ChordParser.txt". 
 
 ![image](https://user-images.githubusercontent.com/1030435/140804949-24957862-9ab6-41f4-bd22-8cdc51356d03.png)
