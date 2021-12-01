@@ -19,7 +19,13 @@ module App =
         | ParseChart
         | Reset
 
-    let initModel = { InputChordChart = ""; OutputChordChart = "" }
+    let initModel = 
+        { 
+            InputChordChart = 
+                "(Bmaj7) Ooo Gustens,    you just (A#) so  (G)\n" +
+                "Dang   (Dmin7 /G) Baaad."
+            OutputChordChart = ""                
+        }
 
     let init () = initModel, Cmd.none
 
@@ -34,21 +40,41 @@ module App =
         
     let view (model: Model) dispatch =
         View.ContentPage(content = 
-            View.Grid(padding = Thickness 20.0, //verticalOptions = LayoutOptions.Center,
+            View.Grid(
+                rowdefs = [ Dimension.Absolute 20.; Dimension.Star; Dimension.Absolute 30. ],
+                padding = Thickness 20.0, //verticalOptions = LayoutOptions.Center,
                 children = [ 
+
+                    // Row
                     View.Label(text = "Input Chord Chart", horizontalOptions = LayoutOptions.Center, horizontalTextAlignment=TextAlignment.Start).Column(0)
                     View.Label(text = "Output Chord Chart", horizontalOptions = LayoutOptions.Center, horizontalTextAlignment=TextAlignment.Start).Column(1)
-                    View.Entry(text = model.InputChordChart, textChanged = (fun e -> dispatch (SetInput e.NewTextValue))).Column(0).Row(1)
-                    View.Entry(text = model.OutputChordChart).Column(1).Row(1)
 
-                    View.Button(
-                        text = "Reset", horizontalOptions = LayoutOptions.Center, command = (fun () -> dispatch Reset), commandCanExecute = (model <> initModel)
-                    ).Row(3).Column(0)
-                    View.Button(
-                        text = "Parse", horizontalOptions = LayoutOptions.Center, command = (fun () -> dispatch ParseChart), commandCanExecute = (model.InputChordChart <> "")
-                    ).Row(3).Column(1)
+                    // Row
+                    View.Entry(
+                        text = model.InputChordChart, 
+                        textChanged = (fun e -> dispatch (SetInput e.NewTextValue)),
+                        verticalTextAlignment = TextAlignment.Start
+                    ).Column(0).Row(1)
+                    View.Entry(
+                        text = model.OutputChordChart,
+                        verticalTextAlignment = TextAlignment.Start
+                    ).Column(1).Row(1)
+
+                    // Row
+                    View.StackLayout(
+                        orientation = StackOrientation.Horizontal,
+                        horizontalOptions = LayoutOptions.End,
+                        children = [
+                            View.Button(
+                                text = "Reset", width = 100., horizontalOptions = LayoutOptions.Center, command = (fun () -> dispatch Reset), commandCanExecute = (model <> initModel)
+                            )
+                            View.Button(
+                                text = "Parse", width = 100., horizontalOptions = LayoutOptions.Center, command = (fun () -> dispatch ParseChart), commandCanExecute = (model.InputChordChart <> "")
+                            )
+                        ]
+                    ).Row(2).Column(1)
                 ])
-            ).RowDefinitions([Dimension.Absolute 30; Dimension.Star; Dimension.Star])
+            )
 
     // Note, this declaration is needed if you enable LiveUpdate
     let program =
