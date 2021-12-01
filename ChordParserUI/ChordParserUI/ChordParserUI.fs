@@ -29,7 +29,7 @@ module App =
                 "(Bmaj7) Ooo Gustens,    you just (A#) so  (G)\n" +
                 "Dang   (Dmin7 /G) Baaad."
             OutputChordChart = ""
-            Transpose = 2
+            Transpose = 1
             Accidental = "b"
         }
 
@@ -51,34 +51,57 @@ module App =
             View.Grid(
                 rowdefs = [ Dimension.Absolute 20.; Dimension.Star; Dimension.Absolute 30. ],
                 coldefs = [ Dimension.Star; Dimension.Absolute 50.; Dimension.Star ],
-                padding = Thickness 20.0, //verticalOptions = LayoutOptions.Center,
+                padding = Thickness 20.0,
                 children = [ 
 
-                    // Row
+                    // Row: labels
                     View.Label(text = "Input Chord Chart", horizontalOptions = LayoutOptions.Center, horizontalTextAlignment=TextAlignment.Start).Column(0)
                     View.Label(text = "Output Chord Chart", horizontalOptions = LayoutOptions.Center, horizontalTextAlignment=TextAlignment.Start).Column(2)
 
-                    // Row
+                    // Row: inputs
+                    // Input Chord Chart
                     View.Entry(
                         text = model.InputChordChart, 
                         textChanged = (fun e -> dispatch (SetInput e.NewTextValue)),
                         verticalTextAlignment = TextAlignment.Start
                     ).Column(0).Row(1)
 
+                    // Settings
                     View.StackLayout(
                         children = [
-                            View.Entry(text = model.Transpose.ToString(), textChanged = (fun e -> dispatch (SetTranspose (int e.NewTextValue))))
-                            View.Entry(text = model.Accidental, textChanged = (fun e -> dispatch (SetAccidental e.NewTextValue)))
+                            let transpose = [-11..-1] @ [1..11]
+                            let transposeIdxLookup = transpose |> List.mapi (fun idx t -> t, idx)|> Map.ofList
+                                
+                            View.Picker(
+                                items = (transpose |> List.map string),
+                                selectedIndex = (transposeIdxLookup.TryFind model.Transpose |> Option.defaultValue 12),
+                                selectedIndexChanged = (fun (idx, value) -> 
+                                    match value with 
+                                    | Some xpose -> dispatch (SetTranspose (int xpose))
+                                    | None -> dispatch (SetTranspose initModel.Transpose)
+                                )
+                            )
+
+                            View.Picker(
+                                items = ["b"; "#"],                                 
+                                selectedIndex = (if model.Accidental = "b" then 0 else 1),
+                                selectedIndexChanged = (fun (idx, value) -> 
+                                    match value with 
+                                    | Some acc -> dispatch (SetAccidental acc)
+                                    | None -> dispatch (SetAccidental "b")
+                                )
+                            )
                         ]
                     ).Column(1).Row(1)
 
+                    // Input Chord Chart
                     View.Entry(
                         text = model.OutputChordChart,
                         verticalTextAlignment = TextAlignment.Start,
                         isReadOnly = true
                     ).Column(2).Row(1)
 
-                    // Row
+                    // Row: buttons
                     View.StackLayout(
                         orientation = StackOrientation.Horizontal,
                         horizontalOptions = LayoutOptions.End,
