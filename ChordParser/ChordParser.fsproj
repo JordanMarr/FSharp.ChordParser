@@ -2,14 +2,14 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
     <None Include="ParserTests.fsx" />
     <Compile Include="Model.fs" />
     <Compile Include="Parser.fs" />
-    <Compile Include="Program.fs" />
+    <Compile Include="App.fs" />
   </ItemGroup>
 
   <ItemGroup>

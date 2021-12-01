@@ -1,15 +1,7 @@
-﻿open System.IO
-open System.Text
-open Model
+﻿module ChordParserConsole
 
-/// Parses and processes the chordchart items.
-let processText semitones preferredAccidental text = 
-    Parser.parse text
-    |> List.map (function
-        | Parser.Lyrics lyrics -> lyrics.ToUpper()
-        | Parser.Chord chord -> chord |> transpose semitones preferredAccidental |> printChord)
-    |> List.fold (fun (sb: StringBuilder) txt -> sb.Append txt) (StringBuilder())
-    |> string
+open System.IO
+open Model
 
 /// Creates a new ChordParser file and saves the output.
 let saveOutput filepath output =
@@ -35,14 +27,14 @@ let main argv =
 
         filepath
         |> File.ReadAllText
-        |> processText 0 "b"
+        |> App.processText 0 "b"
         |> saveOutput filepath
 
     | [| filepath; semitones; preferredAccidental |] ->
         
         filepath
         |> File.ReadAllText
-        |> processText (int semitones) preferredAccidental
+        |> App.processText (int semitones) preferredAccidental
         |> saveOutput filepath
 
     | _ -> 
