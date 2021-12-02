@@ -18,7 +18,8 @@ module App =
 
     type Msg = 
         | SetInput of string
-        | SetTranspose of int
+        | TransposeUp
+        | TransposeDown
         | SetAccidental of string
         | ParseChart
         | Reset
@@ -41,9 +42,16 @@ module App =
 
     let update msg model =
         match msg with
-        | SetInput txt -> { model with InputChordChart = txt }, Cmd.none
-        | SetTranspose xpose -> { model with Transpose = xpose }, Cmd.none
-        | SetAccidental acc -> { model with Accidental = acc }, Cmd.none
+        | SetInput txt -> { model with InputChordChart = txt }, Cmd.ofMsg ParseChart
+        | TransposeUp -> 
+            if model.Transpose < 11 
+            then { model with Transpose = model.Transpose + 1 }, Cmd.ofMsg ParseChart
+            else model, Cmd.none
+        | TransposeDown ->
+            if model.Transpose > -11 
+            then { model with Transpose = model.Transpose - 1 }, Cmd.ofMsg ParseChart
+            else model, Cmd.none
+        | SetAccidental acc -> { model with Accidental = acc }, Cmd.ofMsg ParseChart
         | Reset -> init ()
         | ParseChart ->
             { model with 
@@ -54,7 +62,7 @@ module App =
         View.ContentPage(title = "Chord Parser", content = 
             View.Grid(
                 rowdefs = [ Dimension.Absolute 20.; Dimension.Star; Dimension.Absolute 30. ],
-                coldefs = [ Dimension.Star; Dimension.Absolute 50.; Dimension.Star ],
+                coldefs = [ Dimension.Star; Dimension.Absolute 40.; Dimension.Star ],
                 padding = Thickness 20.0,
                 children = [ 
 
@@ -64,27 +72,18 @@ module App =
 
                     // Row: inputs
                     // Input Chord Chart
-                    View.Entry(
+                    View.Editor(
                         text = model.InputChordChart, 
                         textChanged = (fun e -> dispatch (SetInput e.NewTextValue)),
-                        verticalTextAlignment = TextAlignment.Start
+                        isTextPredictionEnabled = false
                     ).Column(0).Row(1)
 
-                    // Settings
+                    // Middle Column Settings
                     View.StackLayout(
                         children = [
-                            let transpose = [-11..-1] @ [1..11]
-                            let transposeIdxLookup = transpose |> List.mapi (fun idx t -> t, idx)|> Map.ofList
-                                
-                            View.Picker(
-                                items = (transpose |> List.map string),
-                                selectedIndex = (transposeIdxLookup.TryFind model.Transpose |> Option.defaultValue 12),
-                                selectedIndexChanged = (fun (idx, value) -> 
-                                    match value with 
-                                    | Some xpose -> dispatch (SetTranspose (int xpose))
-                                    | None -> dispatch (SetTranspose initModel.Transpose)
-                                )
-                            )
+                            View.Button(text = "▲", width = 20., command = (fun e -> dispatch TransposeUp))
+                            View.Label(text = string model.Transpose, horizontalOptions = LayoutOptions.Center)
+                            View.Button(text = "▼", width = 20., command = (fun e -> dispatch TransposeDown))
 
                             View.StackLayout(
                                 children = [
