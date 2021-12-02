@@ -4,7 +4,7 @@ I created this for my dad to allow him to transpose chords and change lyrics to 
 
 ## Fabulous UI
 This simple UI was created using [Fabulous](https://fsprojects.github.io/Fabulous/) which uses Xamarin.Forms. It currently targets WPF for Windows, but Fabulous also supports iOS and Android.
-![image](https://user-images.githubusercontent.com/1030435/144350640-2917ffd6-0341-4c59-8ce0-ec11bee3f9ac.png)
+![image](https://user-images.githubusercontent.com/1030435/144350683-4f0e0016-a730-457e-8bfd-b7ae1f4e3784.png)
 
 ## Console
 **Command line synax:**
