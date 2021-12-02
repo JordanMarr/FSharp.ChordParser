@@ -74,8 +74,7 @@ module App =
                     // Input Chord Chart
                     View.Editor(
                         text = model.InputChordChart, 
-                        textChanged = (fun e -> dispatch (SetInput e.NewTextValue)),
-                        isTextPredictionEnabled = false
+                        textChanged = (fun e -> dispatch (SetInput e.NewTextValue))
                     ).Column(0).Row(1)
 
                     // Middle Column Settings
