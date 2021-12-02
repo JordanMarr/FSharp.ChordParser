@@ -86,14 +86,19 @@ module App =
                                 )
                             )
 
-                            View.Picker(
-                                items = ["b"; "#"],                                 
-                                selectedIndex = (if model.Accidental = "b" then 0 else 1),
-                                selectedIndexChanged = (fun (idx, value) -> 
-                                    match value with 
-                                    | Some acc -> dispatch (SetAccidental acc)
-                                    | None -> dispatch (SetAccidental "b")
-                                )
+                            View.StackLayout(
+                                children = [
+                                    View.RadioButton(
+                                        content = Content.Value.String "♭", 
+                                        isChecked = (model.Accidental = "b"),
+                                        checkedChanged = (fun e -> if e.Value then dispatch (SetAccidental "b"))
+                                    )
+                                    View.RadioButton(
+                                        content = Content.Value.String "♯", 
+                                        isChecked = (model.Accidental = "#"),
+                                        checkedChanged = (fun e -> if e.Value then dispatch (SetAccidental "#"))
+                                    )
+                                ]
                             )
                         ]
                     ).Column(1).Row(1)
