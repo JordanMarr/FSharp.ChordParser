@@ -11,7 +11,7 @@ module App =
     type Model = 
         { 
             InputChordChart: string
-            OutputChordChart: string 
+            OutputChordChart: Result<string, string> 
             Transpose: int
             Accidental: string
             UCase: bool
@@ -35,7 +35,7 @@ module App =
 #else
                 ""
 #endif
-            OutputChordChart = ""
+            OutputChordChart = Ok ""
             Transpose = 0
             Accidental = "b"
             UCase = false
@@ -59,7 +59,7 @@ module App =
         | Reset -> init ()
         | ParseChart ->
             { model with 
-                OutputChordChart = App.processText model.Transpose model.Accidental model.UCase model.InputChordChart
+                OutputChordChart = App.tryProcessText model.Transpose model.Accidental model.UCase model.InputChordChart
             }, Cmd.none
         
     let view (model: Model) dispatch =
@@ -127,7 +127,14 @@ module App =
 
                     // Input Chord Chart
                     View.Entry(
-                        text = model.OutputChordChart,
+                        text = 
+                            (match model.OutputChordChart with
+                            | Ok output -> output
+                            | Error errMsg -> errMsg),
+                        textColor = 
+                            (match model.OutputChordChart with 
+                            | Ok _ -> Color.Default
+                            | Error _ -> Color.Red),
                         verticalTextAlignment = TextAlignment.Start,
                         isReadOnly = true
                     ).Column(2).Row(1)

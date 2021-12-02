@@ -12,3 +12,10 @@ let processText (semitones: int) (preferredAccidental: string) (ucase: bool) (te
         | Parser.Chord chord -> chord |> transpose semitones preferredAccidental |> printChord)
     |> List.fold (fun (sb: StringBuilder) txt -> sb.Append txt) (StringBuilder())
     |> string
+
+let tryProcessText (semitones: int) (preferredAccidental: string) (ucase: bool) (text: string) = 
+    try 
+        let output = processText semitones preferredAccidental ucase text
+        Ok output
+    with ex ->
+        Error ex.Message
