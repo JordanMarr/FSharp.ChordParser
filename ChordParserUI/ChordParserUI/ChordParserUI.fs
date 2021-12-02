@@ -117,6 +117,7 @@ module App =
 
                             View.Button(
                                 text = "Reset", 
+                                margin = Thickness(0., 100., 0., 0.),
                                 width = 100., 
                                 horizontalOptions = LayoutOptions.Center, 
                                 command = (fun () -> dispatch Reset), 
