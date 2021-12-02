@@ -5,10 +5,10 @@ open System.Text
 open Model
 
 /// Parses and processes the chordchart items.
-let processText semitones preferredAccidental text = 
+let processText (semitones: int) (preferredAccidental: string) (ucase: bool) (text: string) = 
     Parser.parse text
     |> List.map (function
-        | Parser.Lyrics lyrics -> lyrics.ToUpper()
+        | Parser.Lyrics lyrics -> if ucase then lyrics.ToUpper() else lyrics
         | Parser.Chord chord -> chord |> transpose semitones preferredAccidental |> printChord)
     |> List.fold (fun (sb: StringBuilder) txt -> sb.Append txt) (StringBuilder())
     |> string

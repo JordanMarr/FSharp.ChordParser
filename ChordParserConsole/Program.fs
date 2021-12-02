@@ -27,14 +27,14 @@ let main argv =
 
         filepath
         |> File.ReadAllText
-        |> App.processText 0 "b"
+        |> App.processText 0 "b" true
         |> saveOutput filepath
 
     | [| filepath; semitones; preferredAccidental |] ->
         
         filepath
         |> File.ReadAllText
-        |> App.processText (int semitones) preferredAccidental
+        |> App.processText (int semitones) preferredAccidental true
         |> saveOutput filepath
 
     | _ -> 

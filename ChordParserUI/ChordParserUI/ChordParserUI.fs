@@ -14,10 +14,12 @@ module App =
             OutputChordChart: string 
             Transpose: int
             Accidental: string
+            UCase: bool
         }
 
     type Msg = 
         | SetInput of string
+        | SetUCase of bool
         | TransposeUp
         | TransposeDown
         | SetAccidental of string
@@ -34,8 +36,9 @@ module App =
                 ""
 #endif
             OutputChordChart = ""
-            Transpose = 1
+            Transpose = 0
             Accidental = "b"
+            UCase = false
         }
 
     let init () = initModel, Cmd.none
@@ -43,6 +46,7 @@ module App =
     let update msg model =
         match msg with
         | SetInput txt -> { model with InputChordChart = txt }, Cmd.ofMsg ParseChart
+        | SetUCase ucase -> { model with UCase = ucase }, Cmd.ofMsg ParseChart
         | TransposeUp -> 
             if model.Transpose < 11 
             then { model with Transpose = model.Transpose + 1 }, Cmd.ofMsg ParseChart
@@ -55,14 +59,14 @@ module App =
         | Reset -> init ()
         | ParseChart ->
             { model with 
-                OutputChordChart = App.processText model.Transpose model.Accidental model.InputChordChart
+                OutputChordChart = App.processText model.Transpose model.Accidental model.UCase model.InputChordChart
             }, Cmd.none
         
     let view (model: Model) dispatch =
         View.ContentPage(title = "Chord Parser", content = 
             View.Grid(
-                rowdefs = [ Dimension.Absolute 20.; Dimension.Star; Dimension.Absolute 30. ],
-                coldefs = [ Dimension.Star; Dimension.Absolute 40.; Dimension.Star ],
+                rowdefs = [ Dimension.Absolute 20.; Dimension.Star ],
+                coldefs = [ Dimension.Star; Dimension.Absolute 80.; Dimension.Star ],
                 padding = Thickness 20.0,
                 children = [ 
 
@@ -85,6 +89,7 @@ module App =
                             View.Button(text = "▼", width = 20., command = (fun e -> dispatch TransposeDown))
 
                             View.StackLayout(
+                                orientation = StackOrientation.Horizontal,
                                 children = [
                                     View.RadioButton(
                                         content = Content.Value.String "♭", 
@@ -98,6 +103,25 @@ module App =
                                     )
                                 ]
                             )
+
+                            View.StackLayout(
+                                orientation = StackOrientation.Horizontal,
+                                children = [
+                                    View.CheckBox(
+                                        isChecked = model.UCase, 
+                                        checkedChanged = (fun e -> dispatch (SetUCase e.Value))
+                                    )                                    
+                                    View.Label(text = "a → A", horizontalOptions = LayoutOptions.Center)
+                                ]
+                            )
+
+                            View.Button(
+                                text = "Reset", 
+                                width = 100., 
+                                horizontalOptions = LayoutOptions.Center, 
+                                command = (fun () -> dispatch Reset), 
+                                commandCanExecute = (model <> initModel)
+                            )
                         ]
                     ).Column(1).Row(1)
 
@@ -108,19 +132,6 @@ module App =
                         isReadOnly = true
                     ).Column(2).Row(1)
 
-                    // Row: buttons
-                    View.StackLayout(
-                        orientation = StackOrientation.Horizontal,
-                        horizontalOptions = LayoutOptions.End,
-                        children = [
-                            View.Button(
-                                text = "Reset", width = 100., horizontalOptions = LayoutOptions.Center, command = (fun () -> dispatch Reset), commandCanExecute = (model <> initModel)
-                            )
-                            View.Button(
-                                text = "Parse", width = 100., horizontalOptions = LayoutOptions.Center, command = (fun () -> dispatch ParseChart), commandCanExecute = (model.InputChordChart <> "")
-                            )
-                        ]
-                    ).Row(2).Column(2)
                 ])
             )
 
