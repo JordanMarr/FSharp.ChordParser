@@ -1,5 +1,4 @@
 ﻿open Avalonia
-//open Avalonia.FuncUI.Diagnostics
 open Avalonia.Themes.Fluent
 open Avalonia.FuncUI.Hosts
 open Avalonia.Controls.ApplicationLifetimes
@@ -22,8 +21,6 @@ type App() =
         | :? IClassicDesktopStyleApplicationLifetime as desktopLifetime ->
             let mainWindow = MainWindow()
             mainWindow.Show()
-            //InspectorWindow(mainWindow).Show()
-            //mainWindow.Renderer.DrawDirtyRects <- true
             desktopLifetime.MainWindow <- mainWindow
         | _ -> ()
 
