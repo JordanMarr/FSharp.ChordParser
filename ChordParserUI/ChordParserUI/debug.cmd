@@ -1,1 +1,0 @@
-dotnet fabulous --watch --send

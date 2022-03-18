@@ -1,4 +1,4 @@
-﻿module Parser
+﻿module ChordParser.Parser
 open FParsec
 open Model
 

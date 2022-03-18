@@ -38,7 +38,7 @@ let init =
 let update msg model = 
     match msg with
     | ParseChart ->
-        let c = App.tryProcessText model.Transpose model.Accidental model.UCase model.InputChordChart
+        let c = ChordParser.App.tryProcessText model.Transpose model.Accidental model.UCase model.InputChordChart
         { model with OutputChordChart = c }, Cmd.none
     | TransposeUp ->
         if model.Transpose < 11 

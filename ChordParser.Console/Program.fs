@@ -1,4 +1,4 @@
-﻿module ChordParserConsole
+﻿module ChordParser.Console
 
 open System.IO
 open Model

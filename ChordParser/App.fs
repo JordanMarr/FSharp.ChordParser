@@ -1,6 +1,5 @@
-﻿module App
+﻿module ChordParser.App
 
-open System.IO
 open System.Text
 open Model
 

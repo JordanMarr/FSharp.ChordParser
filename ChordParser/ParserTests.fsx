@@ -3,8 +3,8 @@
 #load "Parser.fs"
 
 open FParsec
-open Model
-open Parser
+open ChordParser.Model
+open ChordParser.Parser
 
 let test parser text =
     match (run parser text) with
@@ -49,5 +49,5 @@ chord |> transpose 1 "#"
 // createChord test
 let x = createChord ((("D", Some "min"), Some "7"), None)
 match x with 
-| Chord chord -> Model.transpose -0 chord.Root
+| Chord chord -> transpose -0 chord.Root
 | _ -> failwith ""
