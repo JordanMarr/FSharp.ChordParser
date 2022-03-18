@@ -1,43 +1,22 @@
 ﻿module ChordParser.Console
 
-open System.IO
-open Model
+open FSharp.SystemCommandLine
 
-/// Creates a new ChordParser file and saves the output.
-let saveOutput filepath output =
-    let file = FileInfo(filepath)
-    let newPath = 
-        Path.Combine(
-            file.DirectoryName, 
-            Path.GetFileNameWithoutExtension(filepath) + " ChordParser" + file.Extension
-        )
-
-    File.WriteAllText(newPath, output)
+let run (filepath: string, semitones: int, preferredAccidental: string) =
+    filepath
+    |> System.IO.File.ReadAllText
+    |> App.processText (int semitones) preferredAccidental true
+    |> App.saveOutput filepath
 
 [<EntryPoint>]
 let main argv =
 
-    match argv with
-    | [||] ->
-        printfn "To run, type:\nChordParser \"my song.txt\"\nor:\nChordParser \"c:\myfolder\song.txt\""
-        printfn "To transpose down 1 semitone preferring flats, type: \"\nChordParser \"song.txt\" -1 b"
-        printfn "To transpose up 2 semitones preferring sharps, type: \"\nChordParser \"song.txt\" 2 #"
+    let filepath = Input.Argument<string>("filepath", "Path to the input song text file..")
+    let semitones = Input.Option(["--semitones"; "-s"], (fun () -> 0), "The number of semitones to transpose (+/-).")
+    let preferredAccidental = Input.Option(["--preferred-accidental"; "-a"], (fun () -> "b"), "# or b (defaults to b)")
 
-    | [| filepath |] ->
-
-        filepath
-        |> File.ReadAllText
-        |> App.processText 0 "b" true
-        |> saveOutput filepath
-
-    | [| filepath; semitones; preferredAccidental |] ->
-        
-        filepath
-        |> File.ReadAllText
-        |> App.processText (int semitones) preferredAccidental true
-        |> saveOutput filepath
-
-    | _ -> 
-        failwith "Expected ChordParser {filepath} OR ChordParser {filepath} {semitones +/-} {preferredAccidental}"
-
-    0
+    rootCommand argv {
+        description "Chord Parser"
+        inputs (filepath, semitones, preferredAccidental)
+        setHandler run
+    }

@@ -10,6 +10,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="FSharp.SystemCommandLine" Version="0.3.0-alpha" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ChordParser\ChordParser.fsproj" />
   </ItemGroup>
 
