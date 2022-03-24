@@ -5,7 +5,7 @@ open FSharp.SystemCommandLine
 let run (filepath: string, semitones: int, preferredAccidental: string) =
     filepath
     |> System.IO.File.ReadAllText
-    |> App.processText (int semitones) preferredAccidental true
+    |> App.processText semitones preferredAccidental true
     |> App.saveOutput filepath
 
 [<EntryPoint>]
