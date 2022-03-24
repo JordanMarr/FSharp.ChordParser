@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ChordParser.Console": {
+      "commandName": "Project",
+      "commandLineArgs": "\"$(SolutionDir)/ChordParser/Autumn Leaves.txt\" --semitones 2"
+    }
+  }
+}
