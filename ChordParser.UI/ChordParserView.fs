@@ -63,14 +63,18 @@ let cmp () = Component (fun ctx ->
     Grid.create [
         Grid.rowDefinitions "20, *"
         Grid.columnDefinitions "*, 80, *"
+        Grid.margin 10
+        
         Grid.children [
             // Row labels
             TextBlock.create [
                 TextBlock.text "Input Chord Chart"
+                TextBlock.horizontalAlignment HorizontalAlignment.Center
                 Grid.column 0
             ]
             TextBlock.create [
                 TextBlock.text "Output Chord Chart"
+                TextBlock.horizontalAlignment HorizontalAlignment.Center
                 Grid.column 2
             ]
 
@@ -86,6 +90,7 @@ let cmp () = Component (fun ctx ->
             StackPanel.create [
                 Grid.column 1
                 Grid.row 1
+                StackPanel.margin (5, 0, 5, 0)
 
                 StackPanel.children [
                     // Transpose up
