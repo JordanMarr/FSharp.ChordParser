@@ -1,0 +1,43 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "FunUI Launch",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/ChordParser.UI/bin/Debug/net6.0/ChordParser.UI.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "linux": {
+                "env": {
+                    "LANG": "en_US.UTF-8"
+                }
+            }
+        },
+        {
+            "name": "FuncUI Launch(Live Preview)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/ChordParser.UI/bin/Debug/net6.0/ChordParser.UI.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopAtEntry": false,
+
+            "env": {
+                "LANG": "en_US.UTF-8",
+                "FUNCUI_LIVEPREVIEW": "1"
+            },
+            "linux": {
+                "env": {
+                    "LANG": "en_US.UTF-8",
+                    "FUNCUI_LIVEPREVIEW": "1"
+                }
+            }
+        }
+    ]
+}

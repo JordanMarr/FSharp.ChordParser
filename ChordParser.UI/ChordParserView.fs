@@ -7,6 +7,7 @@ open Avalonia.FuncUI.DSL
 open Avalonia.FuncUI.AvaloniaExtensions
 open Avalonia.FuncUI.Types
 open Avalonia.FuncUI.Elmish.ElmishHook
+open Avalonia.FuncUI.LiveView.Core.Types
 
 type Model = 
     { 
@@ -57,7 +58,8 @@ let update msg model =
     | Reset ->
         init
 
-let cmp () = Component (fun ctx ->
+[<LivePreview>]
+let render () = Component (fun ctx ->
     let model, dispatch = ctx.useElmish (init, update)
     
     Grid.create [
