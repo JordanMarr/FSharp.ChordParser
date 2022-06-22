@@ -8,6 +8,7 @@ open Avalonia.FuncUI.AvaloniaExtensions
 open Avalonia.FuncUI.Types
 open Avalonia.FuncUI.Elmish.ElmishHook
 open Avalonia.FuncUI.LiveView.Core.Types
+open Avalonia.Media
 
 type Model = 
     { 
@@ -66,17 +67,19 @@ let render () = Component (fun ctx ->
         Grid.rowDefinitions "20, *"
         Grid.columnDefinitions "*, 80, *"
         Grid.margin 10
-        
+                
         Grid.children [
             // Row labels
             TextBlock.create [
-                TextBlock.text "Input Chord Chart"
-                TextBlock.horizontalAlignment HorizontalAlignment.Center
+                TextBlock.text "Input Chord Chart"                
+                TextBlock.fontWeight FontWeight.Bold
+                TextBlock.horizontalAlignment HorizontalAlignment.Left
                 Grid.column 0
             ]
             TextBlock.create [
                 TextBlock.text "Output Chord Chart"
-                TextBlock.horizontalAlignment HorizontalAlignment.Center
+                TextBlock.fontWeight FontWeight.Bold
+                TextBlock.horizontalAlignment HorizontalAlignment.Left
                 Grid.column 2
             ]
 

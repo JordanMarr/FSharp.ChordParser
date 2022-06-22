@@ -2,5 +2,7 @@
     "FSharp.enableAnalyzers": true,
     "FSharp.analyzersPath": [
         "packages/analyzers"
-    ]
+    ],
+    "FSharp.inlayHints.parameterNames": false,
+    "FSharp.inlayHints.typeAnnotations": false
 }
