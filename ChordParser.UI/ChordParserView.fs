@@ -101,6 +101,7 @@ let render () = Component (fun ctx ->
                     // Transpose up
                     Button.create [
                         Button.content "▲"
+                        Button.tip "Increment"
                         Button.horizontalAlignment HorizontalAlignment.Stretch
                         Button.horizontalContentAlignment HorizontalAlignment.Center
                         Button.onClick (fun e -> dispatch TransposeUp)
@@ -115,6 +116,7 @@ let render () = Component (fun ctx ->
                     // Transpose down
                     Button.create [
                         Button.content "▼"
+                        Button.tip "Decrement"
                         Button.horizontalAlignment HorizontalAlignment.Stretch
                         Button.horizontalContentAlignment HorizontalAlignment.Center
                         Button.onClick (fun e -> dispatch TransposeDown)
@@ -132,10 +134,8 @@ let render () = Component (fun ctx ->
                             ]
                             TextBlock.create [
                                 TextBlock.verticalAlignment VerticalAlignment.Center
-                                TextBlock.text <|
-                                    if model.UCase
-                                    then "A -> a"
-                                    else "a -> A"
+                                TextBlock.text "a -> A"
+                                TextBlock.tip "To Upper Case"
                             ]
                         ]
                     ]
@@ -147,12 +147,14 @@ let render () = Component (fun ctx ->
                         StackPanel.children [
                             RadioButton.create [
                                 RadioButton.content "♭ "
+                                RadioButton.tip "Flats"
                                 RadioButton.isChecked (model.Accidental = "b")
                                 RadioButton.onChecked (fun _ -> dispatch (SetAccidental "b"))
                             ]
 
                             RadioButton.create [
                                 RadioButton.content "♯ "
+                                RadioButton.tip "Sharps"
                                 RadioButton.isChecked (model.Accidental = "#")
                                 RadioButton.onChecked (fun _ -> dispatch (SetAccidental "#"))
                             ]
