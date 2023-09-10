@@ -2,6 +2,7 @@
 open Avalonia.Themes.Fluent
 open Avalonia.FuncUI.Hosts
 open Avalonia.Controls.ApplicationLifetimes
+open Avalonia.Controls
 open ChordParser.UI
 
 type MainWindow() =
@@ -14,7 +15,8 @@ type App() =
     inherit Application()
 
     override this.Initialize() =
-        this.Styles.Add (FluentTheme(baseUri = null, Mode = FluentThemeMode.Light))
+        this.Styles.Add (FluentTheme())
+        this.RequestedThemeVariant <- Styling.ThemeVariant.Dark
 
     override this.OnFrameworkInitializationCompleted() =
         match this.ApplicationLifetime with

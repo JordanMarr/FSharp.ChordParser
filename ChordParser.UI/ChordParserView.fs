@@ -1,5 +1,6 @@
 ﻿module ChordParser.UI.ChordParserView
 
+open Elmish
 open Avalonia.Layout
 open Avalonia.Controls
 open Avalonia.FuncUI
@@ -26,7 +27,7 @@ type Msg =
     | SetUCase of bool
     | Reset
 
-let init = 
+let init () = 
     { 
         InputChordChart = SampleCharts.autumnLeaves
         OutputChordChart = Ok ""
@@ -55,10 +56,10 @@ let update msg model =
     | SetUCase ucase -> 
         { model with UCase = ucase }, Cmd.ofMsg ParseChart
     | Reset ->
-        init
+        init ()
 
 let cmp () = Component (fun ctx ->
-    let model, dispatch = ctx.useElmish (init, update)
+    let model, dispatch = ctx.useElmish(init, update)
     
     Grid.create [
         Grid.rowDefinitions "20, *"
@@ -160,7 +161,7 @@ let cmp () = Component (fun ctx ->
                         Button.horizontalContentAlignment HorizontalAlignment.Center
                         Button.onClick (fun _ -> dispatch Reset)
                         Button.isEnabled (
-                            let initialModel, _ = init
+                            let initialModel, _ = init ()
                             model <> initialModel
                         )
                     ]
